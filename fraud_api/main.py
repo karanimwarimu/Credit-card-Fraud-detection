@@ -9,7 +9,7 @@ from fraud_detection_apk import  predict_batch_fast
 from pathlib import Path
 
 #import logging
-from utils.logging_setup import setup_logging
+from _utilities.logging_setup import setup_logging
 
 """
 

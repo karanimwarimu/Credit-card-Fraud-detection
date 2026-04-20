@@ -6,13 +6,12 @@ import json
 import argparse
 from fraud_client import score_transactions
 
-from utils.test_fraud_api import generate_transactions
+from _utilities.test_fraud_api import generate_transactions
 
 import sys
 from pathlib import Path
 
-parent_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(parent_dir))
+
 
 # ── Display ────────────────────────────────────────────────────
 def display_results(results: list[dict]) -> None:

@@ -1,6 +1,13 @@
+# Data files
 Data_set/creditcard.csv
+
+# Model files
 models/best_fraud_model.pkl
+
+# Word documents
 guide.docx
 guide44444.docx
 ~$ide44444.docx
+
+# Jupyter notebooks
 KNN_xx.ipynb
