@@ -2,13 +2,17 @@
 # this module is responsible for receiving transaction data, sending it to the fraud detection API, and returning the predictions to the caller.
 
 # fraud_client/run.py
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+
 import json
 import argparse
 from fraud_client import score_transactions
 
 from _utilities.test_fraud_api import generate_transactions
-
-import sys
 from pathlib import Path
 
 

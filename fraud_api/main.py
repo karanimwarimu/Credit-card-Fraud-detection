@@ -31,7 +31,7 @@ app = FastAPI(title="Fraud Detection API", description="API for predicting fraud
 
 # route to check if the API is running and healthy, we can use this endpoint to perform a simple health check.
 
-app.get("/health")
+@app.get("/health")
 
 def health_check():
     return {"status": "ok", "message": "Fraud Detection API is healthy and ready to receive requests."}
@@ -40,7 +40,7 @@ def health_check():
     # this endpoint can handle both single transactions and batches of transactions.
     
     
-app.post("/predict", response_model=list[BatchPredictionResponse]) # we expect a list of predictions in the response, even if it's just one transaction
+@app.post("/predict", response_model=list[BatchPredictionResponse]) # we expect a list of predictions in the response, even if it's just one transaction
 
 async def predict(request: BatchRequest):
     try :

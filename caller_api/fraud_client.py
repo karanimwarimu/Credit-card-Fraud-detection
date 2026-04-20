@@ -10,7 +10,20 @@ import json
 from typing import List, Dict, Union # for type hints
 
 
-API_URL = "http://localhost:8000/predict"
+check_url = "http://localhost:5000/health"
+
+#to call the check endpoint to make sure the API is running before we send prediction requests.
+def check_api_health() -> bool:
+    try:
+        response = httpx.get(check_url, timeout=5.0)
+        response.raise_for_status()
+        data = response.json()
+        return data.get("status") == "ok"
+    except Exception as e:
+        print(f"API health check failed: {e}")
+        return False
+
+API_URL = "http://localhost:5000/predict"
 
 # ── Core function ──────────────────────────────────────────────
 
