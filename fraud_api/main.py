@@ -8,9 +8,22 @@ from schemas import Transaction, PredictionResponse, BatchRequest, BatchPredicti
 from fraud_detection_apk import  predict_batch_fast
 from pathlib import Path
 
-import logging
+#import logging
+from utils.logging_setup import setup_logging
+
+"""
+
+#This module defines the FastAPI application for the Fraud Detection API. It includes endpoints for health checks
+
+logger = logging.getLogger("uvicorn.error")
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__) # we can use this logger to log important information and debug messages in our API
+"""
+
+# using configured logger from logging_setup.py
+
+logger = setup_logging()
 
 
 app = FastAPI(title="Fraud Detection API", description="API for predicting fraudulent transactions using a trained model.", version="1.0")

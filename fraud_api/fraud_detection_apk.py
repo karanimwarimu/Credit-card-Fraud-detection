@@ -110,8 +110,8 @@ def predict_batch_fast(transactions: list[dict]) -> list[dict]:
         for p, c, d, f in zip(probs, predictions, decisions, is_fraud_flags)
     ]
    
-   
-    
+# create a cv file for every list of transactions generated
+  
 # what is happening here is that we are loading the model and its artifacts, then we define a function to make predictions on new transaction data. 
   # The function takes a dictionary of transaction data, converts it to a DataFrame, and uses the model to predict the probability of fraud. 
   # Based on the predicted probability, it makes a decision and returns the results in a structured format. 
@@ -142,10 +142,11 @@ def predict_batch_fast(transactions: list[dict]) -> list[dict]:
 # generate the synthetic transactions and get predictions for the batch of transactions
 transactions = generate_transactions(50)
 
-# create a cv file for every list of transactions generated,
+
 # to see the distribution of the transactions and the predicted probabilities, we can use this for further analysis and visualization.   
 
 import pandas as pd
+
 df = pd.DataFrame(transactions)
 i = 0 
 
@@ -153,16 +154,14 @@ dataset_path = current_dir.parent / "Data_set" / f"synthetic_transactions{i}.csv
 df.to_csv(dataset_path, index=False)
 print("Synthetic transactions saved to CSV file.")
 i += 1
-"""
+
+results = predict_batch_fast(transactions)
+
 
 #transactions = pd.read_csv(current_dir.parent / "Data_set" / "synthetic_transactions0.csv").to_dict(orient='records')
 
-new_transaction = { "Time": 123456.0 , "V1": -1.0, "V2": 0.5, "V3": 0.3, "V4": -0.2, "V5": 0.1, "V6": -0.1, "V7": 0.2, "V8": -0.3, "V9": 0.4, "V10": -0.4, "V11": 0.5, "V12": -0.5, "V13": 0.6, "V14": -0.6, "V15": 0.7, "V16": -0.7, "V17": 0.8, "V18": -0.8, "V19": 0.9, "V20": -0.9, "V21": 1.0, "V22": -1.0, "V23": 1.1, "V24": -1.1, "V25": 1.2, "V26": -1.2, "V27": 1.3, "V28": -1.3, "Amount": 100.0 }
-
-transactions = [new_transaction]
-
-results = predict_batch_fast(transactions)
 
 for i, res in enumerate(results, 1):
     print(f"Transaction {i}: {res}")
 
+"""
