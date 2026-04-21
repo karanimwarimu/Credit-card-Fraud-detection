@@ -7,7 +7,7 @@ from fastapi import FastAPI , HTTPException
 from schemas import Transaction, PredictionResponse, BatchRequest, BatchPredictionResponse
 from fraud_detection_apk import  predict_batch_fast
 from pathlib import Path
-
+from datetime import datetime
 #import logging
 from _utilities.logging_setup import setup_logging
 
@@ -40,10 +40,12 @@ def health_check():
     # this endpoint can handle both single transactions and batches of transactions.
     
     
-@app.post("/predict", response_model=list[BatchPredictionResponse]) # we expect a list of predictions in the response, even if it's just one transaction
+@app.post("/predict", response_model=BatchPredictionResponse) # we expect a list of predictions in the response, even if it's just one transaction
 
 async def predict(request: BatchRequest):
     try :
+        
+        start_time = datetime.now()
         logger.info(f"Received prediction request with {len(request.transactions) if isinstance(request.transactions, list) else 1} transaction(s).")
         txns =  request.transactions
         if isinstance (txns, Transaction):
@@ -64,7 +66,9 @@ async def predict(request: BatchRequest):
           ]
 
         return BatchPredictionResponse(predictions=responses)
+        end_time = datetime.now()
         logger.info(f"Returning prediction response for {len(responses)} transaction(s).")
+        logger.info(f"Processed prediction request in {(end_time - start_time).total_seconds():.2f} seconds.")
         
     except ValueError as ve:
         logger.error(f"Value error processing prediction request: {ve}")
@@ -72,3 +76,6 @@ async def predict(request: BatchRequest):
     except Exception as e:
         logger.error(f"Error processing prediction request: {e}")
         raise HTTPException(status_code=500, detail="An error occurred while processing the prediction request.")
+    
+    
+    

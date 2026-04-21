@@ -12,10 +12,13 @@ import json
 import argparse
 from fraud_client import score_transactions
 
-from _utilities.test_fraud_api import generate_transactions
+from _utilities.test_fraud_api import generate_transactions 
+from _utilities.logging_setup import setup_logging
 from pathlib import Path
+from datetime import datetime, timedelta
 
 
+logging = setup_logging()
 
 # ── Display ────────────────────────────────────────────────────
 def display_results(results: list[dict]) -> None:
@@ -38,6 +41,15 @@ if __name__ == "__main__":
   
 
     # ── score and display ──
-    transactions = generate_transactions(5) # generate 5 synthetic transactions for testing
+    
+    #start time
+    start_time = datetime.now()
+    transactions = generate_transactions(22) # generate 5 synthetic transactions for testing
+    print(f"ALL RANSACTIONS GENERATED INCLUDE  : " , transactions)
     results = score_transactions(transactions)
+    
+  
     display_results(results)
+    end_time = datetime.now()
+    logging.info(f"Processed {len(transactions)} transactions in {(end_time - start_time).total_seconds():.2f} seconds.")
+    print(f"Processing time: {end_time - start_time}")
